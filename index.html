@@ -1,32 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hourly Rate Pricing Breakdown: Proposal Demo</title>
 <meta name="description" content="Interactive demo of a freelancer hourly rate pricing breakdown: base rate, platform service fee and HST, Stripe processing fee, GST handling and the total displayed to the client.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="site-header">
-  <div class="wrap">
-    <h1>Freelancer Hourly Rate: Pricing Breakdown</h1>
-    <p>Proposal demo built to the PrideLink brief. Type a rate and watch every calculated field update. Calculated fields are read-only, exactly as specified.</p>
+  <div class="wrap header-row">
+    <div>
+      <p class="eyebrow">PrideLink · Proposal demo</p>
+      <h1>Freelancer Hourly Rate: Pricing Breakdown</h1>
+      <p class="lede">Type a rate and watch every calculated field update. Calculated fields are read-only, exactly as specified.</p>
+    </div>
+    <button id="btn-theme" class="theme-btn" type="button" aria-label="Toggle dark mode">🌙 Dark</button>
   </div>
 </header>
 
 <main class="wrap layout">
   <section class="card" aria-labelledby="setup-h">
-    <h2 id="setup-h">Freelancer profile setup</h2>
+    <h2 id="setup-h"><span class="step">1</span> Freelancer profile setup</h2>
     <label class="field">
-      <span>Your On Demand Hourly Rate ($)</span>
-      <input id="in-rate" type="number" min="0" step="0.01" value="100.00" inputmode="decimal">
+      <span>Your On Demand Hourly Rate</span>
+      <span class="money-input"><span class="cur">$</span><input id="in-rate" type="number" min="0" step="0.01" value="100.00" inputmode="decimal" aria-label="Your on demand hourly rate in dollars"></span>
     </label>
-    <label class="field toggle">
-      <input id="in-gst" type="checkbox">
-      <span>I am registered for GST (GST is included in the rate shown to clients)</span>
-    </label>
+    <div class="field switch-row">
+      <div>
+        <span class="switch-label">Registered for GST</span>
+        <span class="switch-sub">GST is included in the rate shown to clients</span>
+      </div>
+      <label class="switch">
+        <input id="in-gst" type="checkbox" aria-label="I am registered for GST">
+        <span class="track"><span class="thumb"></span></span>
+      </label>
+    </div>
 
     <table class="breakdown" aria-label="Pricing breakdown">
       <tbody>
@@ -40,15 +53,15 @@
         </tr>
         <tr>
           <th scope="row">PrideLink Service Fee &amp; HST <span class="sub" id="fee-note"></span></th>
-          <td><input id="out-fee" class="calc" readonly value="$11.30" aria-readonly="true"></td>
+          <td><input id="out-fee" class="calc" readonly value="$11.30" aria-readonly="true" tabindex="-1"></td>
         </tr>
         <tr>
           <th scope="row">Stripe Payment Processing Fee <span class="sub" id="stripe-note"></span></th>
-          <td><input id="out-stripe" class="calc" readonly value="$3.20" aria-readonly="true"></td>
+          <td><input id="out-stripe" class="calc" readonly value="$3.20" aria-readonly="true" tabindex="-1"></td>
         </tr>
         <tr class="total">
           <th scope="row">Total Hourly Rate Displayed to Client</th>
-          <td><input id="out-total" class="calc strong" readonly value="$114.50" aria-readonly="true"></td>
+          <td><input id="out-total" class="calc strong" readonly value="$114.50" aria-readonly="true" tabindex="-1"></td>
         </tr>
       </tbody>
     </table>
@@ -56,10 +69,17 @@
   </section>
 
   <section class="card client" aria-labelledby="client-h">
-    <h2 id="client-h">What the client sees</h2>
+    <h2 id="client-h"><span class="step">2</span> What the client sees</h2>
     <div class="book-card">
-      <p class="book-rate"><span id="client-rate">$114.50</span> <span class="per">/ hour</span></p>
-      <button class="btn" type="button" id="btn-receipt">View price breakdown</button>
+      <div class="freelancer">
+        <span class="avatar" aria-hidden="true">PL</span>
+        <div>
+          <p class="f-name">Your Freelancer</p>
+          <p class="f-meta">★ 5.0 · On Demand booking</p>
+        </div>
+      </div>
+      <p class="book-rate"><span id="client-rate">$114.50</span> <span class="per">/ hour, all-in</span></p>
+      <button class="btn" type="button" id="btn-receipt" aria-expanded="false">View price breakdown</button>
       <div id="receipt" class="receipt" hidden>
         <div class="r-row"><span>Freelancer hourly rate</span><span id="r-base">$100.00</span></div>
         <div class="r-row" id="r-gst-row" hidden><span>GST (included)</span><span id="r-gst">$0.00</span></div>
@@ -69,10 +89,10 @@
         <p class="receipt-note">One transparent total. Platform and processing fees are shown openly, so the total never looks like more than the rate you agreed.</p>
       </div>
     </div>
-    <h3>Try it</h3>
+    <h3 class="try-h">Try it</h3>
     <ul class="try">
-      <li>Set the rate to 100 with GST off: the total is exactly the brief's example, $114.50.</li>
-      <li>Tick GST registration: a GST line appears and the displayed total includes it.</li>
+      <li>Rate 100, GST off: the total is exactly the brief's example, <strong>$114.50</strong>.</li>
+      <li>Flip the GST switch: a GST line appears and the displayed total includes it.</li>
       <li>Try 75 or 42.50 and check the cents rounding.</li>
     </ul>
   </section>

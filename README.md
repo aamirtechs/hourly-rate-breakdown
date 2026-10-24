@@ -53,9 +53,20 @@ a rounding case, and zero/invalid input handling. 5 tests, no packages.
 - `app.js` DOM wiring only
 - `tests/pricing.test.js` calculation tests (Node 18+)
 
+## Design
+
+Premium UI pass (v1.1.0): Sora for headings and figures, Plus Jakarta Sans
+for body text, a plum and gold palette, soft layered shadows, a proper
+toggle switch for GST registration, a booking-card style client view with a
+ticket-style receipt, animated total transitions, and a full dark mode
+(follows the visitor's system preference, with a manual toggle).
+
 ## Dependencies and third-party assets
 
-None. No frameworks, no CDN calls, no web fonts, no images.
+No frameworks, no libraries, no images. One third-party asset: the fonts
+Sora and Plus Jakarta Sans, loaded from Google Fonts under the SIL Open
+Font License 1.1. If the fonts cannot load (for example offline), the app
+falls back to the system font stack and remains fully usable.
 
 ## Assumptions to confirm with PrideLink
 
