@@ -46,6 +46,7 @@ function render(animate) {
     $("client-rate").textContent = fmt(b.total);
   }
 
+  $("gst-badge").hidden = !gstReg;
   $("row-gst").hidden = !gstReg;
   if (gstReg) {
     $("gst-note").textContent = "(" + pct(CONFIG.gstRate) + " of the base rate)";
@@ -62,7 +63,7 @@ function render(animate) {
 
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
-  $("btn-theme").textContent = theme === "dark" ? "☀️ Light" : "🌙 Dark";
+  $("btn-theme").textContent = theme === "dark" ? "☀️" : "🌙";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -70,6 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
   $("btn-theme").addEventListener("click", () => {
     const next = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
     applyTheme(next);
+  });
+  $("btn-save").addEventListener("click", () => {
+    const n = $("saved-note");
+    n.textContent = "✓ Rate saved";
+    setTimeout(() => { n.textContent = ""; }, 2400);
   });
   $("in-rate").addEventListener("input", () => render(true));
   $("in-gst").addEventListener("change", () => render(true));

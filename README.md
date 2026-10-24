@@ -55,11 +55,16 @@ a rounding case, and zero/invalid input handling. 5 tests, no packages.
 
 ## Design
 
-Premium UI pass (v1.1.0): Sora for headings and figures, Plus Jakarta Sans
-for body text, a plum and gold palette, soft layered shadows, a proper
-toggle switch for GST registration, a booking-card style client view with a
-ticket-style receipt, animated total transitions, and a full dark mode
-(follows the visitor's system preference, with a manual toggle).
+Marketplace-style UI (v1.2.0): the page is dressed the way Upwork and
+Fiverr dress theirs, branded for PrideLink in plum and gold. A sticky
+marketplace top bar with logo, search pill and profile avatar; a settings
+breadcrumb; a freelancer profile card (cover strip, verified name, star
+rating, Top Rated badge, earnings stats) whose GST-registered badge
+appears live when the GST switch is on; a "Set your hourly rate" settings
+panel with info tooltips and a Fiverr-green Save button; and a sticky
+client booking box with the all-in price, booking CTA, receipt breakdown
+and trust assurances. Sora headings, Plus Jakarta Sans body, animated
+total transitions, full dark mode.
 
 ## Dependencies and third-party assets
 

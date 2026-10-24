@@ -3,37 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hourly Rate Pricing Breakdown: Proposal Demo</title>
-<meta name="description" content="Interactive demo of a freelancer hourly rate pricing breakdown: base rate, platform service fee and HST, Stripe processing fee, GST handling and the total displayed to the client.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+<title>Hourly Rate Pricing · PrideLink Demo</title>
+<meta name="description" content="Marketplace-style demo of PrideLink's freelancer hourly rate pricing: base rate, service fee and HST, Stripe processing fee, GST handling and the total clients see.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%235b2a86'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'>P</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="site-header">
-  <div class="wrap header-row">
-    <div>
-      <p class="eyebrow">PrideLink · Proposal demo</p>
-      <h1>Freelancer Hourly Rate: Pricing Breakdown</h1>
-      <p class="lede">Type a rate and watch every calculated field update. Calculated fields are read-only, exactly as specified.</p>
+<nav class="topbar">
+  <div class="wrap topbar-row">
+    <a class="logo" href="#" aria-label="PrideLink home"><span class="logo-mark">P</span> PrideLink</a>
+    <div class="search" role="search"><span aria-hidden="true">🔍</span><input type="search" placeholder="Search services, freelancers…" aria-label="Search"></div>
+    <div class="top-links">
+      <a href="#">Find work</a><a href="#">My jobs</a><a href="#">Messages <span class="dot" aria-label="2 unread"></span></a>
+      <button id="btn-theme" class="theme-btn" type="button" aria-label="Toggle dark mode">🌙</button>
+      <span class="avatar-sm" aria-hidden="true">JL</span>
     </div>
-    <button id="btn-theme" class="theme-btn" type="button" aria-label="Toggle dark mode">🌙 Dark</button>
   </div>
-</header>
+</nav>
+<div class="crumbbar"><div class="wrap crumbs">Settings <span aria-hidden="true">›</span> Profile <span aria-hidden="true">›</span> <strong>Hourly rate</strong> <span class="demo-tag">Proposal demo</span></div></div>
 
 <main class="wrap layout">
-  <section class="card" aria-labelledby="setup-h">
-    <h2 id="setup-h"><span class="step">1</span> Freelancer profile setup</h2>
+  <aside class="card profile">
+    <div class="cover"></div>
+    <span class="avatar-lg" aria-hidden="true">JL</span>
+    <h2 class="p-name">Jordan Lee <span class="verified" title="Identity verified">✔</span></h2>
+    <p class="p-title">Customer Support Specialist</p>
+    <p class="p-rating">★ 5.0 <span class="p-muted">(25 reviews)</span> · 100% job success</p>
+    <div class="badges">
+      <span class="badge badge-top">★ Top Rated</span>
+      <span class="badge" id="gst-badge" hidden>GST registered</span>
+    </div>
+    <ul class="p-stats">
+      <li><strong>$14k+</strong><span>earned</span></li>
+      <li><strong>38</strong><span>jobs done</span></li>
+      <li><strong>~1 hr</strong><span>responds</span></li>
+    </ul>
+    <p class="p-note">This is how your profile card appears across PrideLink search and booking pages.</p>
+  </aside>
+
+  <section class="card settings" aria-labelledby="setup-h">
+    <h1 id="setup-h">Set your hourly rate</h1>
+    <p class="lede">Clients book you by the hour at one all-in rate. Set your base rate and PrideLink calculates the rest. Calculated fields cannot be edited.</p>
+
     <label class="field">
       <span>Your On Demand Hourly Rate</span>
-      <span class="money-input"><span class="cur">$</span><input id="in-rate" type="number" min="0" step="0.01" value="100.00" inputmode="decimal" aria-label="Your on demand hourly rate in dollars"></span>
+      <span class="money-input"><span class="cur">$</span><input id="in-rate" type="number" min="0" step="0.01" value="100.00" inputmode="decimal" aria-label="Your on demand hourly rate in dollars"><span class="per">/ hr</span></span>
     </label>
+
     <div class="field switch-row">
       <div>
         <span class="switch-label">Registered for GST</span>
-        <span class="switch-sub">GST is included in the rate shown to clients</span>
+        <span class="switch-sub">GST is included in the rate shown to clients, per platform tax rules</span>
       </div>
       <label class="switch">
         <input id="in-gst" type="checkbox" aria-label="I am registered for GST">
@@ -52,11 +75,11 @@
           <td id="out-gst">$0.00</td>
         </tr>
         <tr>
-          <th scope="row">PrideLink Service Fee &amp; HST <span class="sub" id="fee-note"></span></th>
+          <th scope="row">PrideLink Service Fee &amp; HST <span class="info" title="Platform service fee plus HST charged on the fee">i</span> <span class="sub" id="fee-note"></span></th>
           <td><input id="out-fee" class="calc" readonly value="$11.30" aria-readonly="true" tabindex="-1"></td>
         </tr>
         <tr>
-          <th scope="row">Stripe Payment Processing Fee <span class="sub" id="stripe-note"></span></th>
+          <th scope="row">Stripe Payment Processing Fee <span class="info" title="Card processing passed through at cost">i</span> <span class="sub" id="stripe-note"></span></th>
           <td><input id="out-stripe" class="calc" readonly value="$3.20" aria-readonly="true" tabindex="-1"></td>
         </tr>
         <tr class="total">
@@ -65,42 +88,45 @@
         </tr>
       </tbody>
     </table>
-    <p class="note">Fees are calculated automatically and cannot be edited by the freelancer. All percentages live in one config block in <code>pricing.js</code>, ready to be matched to the platform's exact rules.</p>
+    <div class="save-row">
+      <button class="btn btn-save" type="button" id="btn-save">Save rate</button>
+      <span class="saved" id="saved-note" role="status"></span>
+    </div>
+    <p class="note">All percentages live in one config block in <code>pricing.js</code>, ready to be matched to PrideLink's exact production rules. The same single calculation feeds this page, the booking flow and the receipt, so the numbers can never disagree.</p>
   </section>
 
-  <section class="card client" aria-labelledby="client-h">
-    <h2 id="client-h"><span class="step">2</span> What the client sees</h2>
-    <div class="book-card">
-      <div class="freelancer">
-        <span class="avatar" aria-hidden="true">PL</span>
-        <div>
-          <p class="f-name">Your Freelancer</p>
-          <p class="f-meta">★ 5.0 · On Demand booking</p>
-        </div>
-      </div>
-      <p class="book-rate"><span id="client-rate">$114.50</span> <span class="per">/ hour, all-in</span></p>
-      <button class="btn" type="button" id="btn-receipt" aria-expanded="false">View price breakdown</button>
-      <div id="receipt" class="receipt" hidden>
-        <div class="r-row"><span>Freelancer hourly rate</span><span id="r-base">$100.00</span></div>
-        <div class="r-row" id="r-gst-row" hidden><span>GST (included)</span><span id="r-gst">$0.00</span></div>
-        <div class="r-row"><span>PrideLink service fee &amp; HST</span><span id="r-fee">$11.30</span></div>
-        <div class="r-row"><span>Payment processing fee</span><span id="r-stripe">$3.20</span></div>
-        <div class="r-row r-total"><span>Total per hour</span><span id="r-total">$114.50</span></div>
-        <p class="receipt-note">One transparent total. Platform and processing fees are shown openly, so the total never looks like more than the rate you agreed.</p>
-      </div>
+  <aside class="card bookbox" aria-labelledby="client-h">
+    <h2 id="client-h" class="sr-only">What the client sees</h2>
+    <p class="bb-label">Client booking view</p>
+    <p class="book-rate"><span id="client-rate">$114.50</span> <span class="per">/ hour</span></p>
+    <p class="bb-sub">All-in price. No surprises at checkout.</p>
+    <button class="btn btn-book" type="button">Book Jordan</button>
+    <button class="btn btn-ghost" type="button" id="btn-receipt" aria-expanded="false">View price breakdown</button>
+    <div id="receipt" class="receipt" hidden>
+      <div class="r-row"><span>Freelancer hourly rate</span><span id="r-base">$100.00</span></div>
+      <div class="r-row" id="r-gst-row" hidden><span>GST (included)</span><span id="r-gst">$0.00</span></div>
+      <div class="r-row"><span>PrideLink service fee &amp; HST</span><span id="r-fee">$11.30</span></div>
+      <div class="r-row"><span>Payment processing fee</span><span id="r-stripe">$3.20</span></div>
+      <div class="r-row r-total"><span>Total per hour</span><span id="r-total">$114.50</span></div>
+      <p class="receipt-note">One transparent total, itemised on every receipt, so a booking total never looks like more than the rate you agreed.</p>
     </div>
+    <ul class="assure">
+      <li>✔ Secure payment via Stripe</li>
+      <li>✔ Free cancellation up to 24h before</li>
+      <li>✔ PrideLink support on every booking</li>
+    </ul>
     <h3 class="try-h">Try it</h3>
     <ul class="try">
-      <li>Rate 100, GST off: the total is exactly the brief's example, <strong>$114.50</strong>.</li>
-      <li>Flip the GST switch: a GST line appears and the displayed total includes it.</li>
-      <li>Try 75 or 42.50 and check the cents rounding.</li>
+      <li>Rate 100, GST off: exactly the brief's example, <strong>$114.50</strong>.</li>
+      <li>Flip GST on: a GST line and a profile badge appear.</li>
+      <li>Try 75 or 42.50 and check the cents.</li>
     </ul>
-  </section>
+  </aside>
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <p>Demo only, built for a job proposal. Fee percentages are configurable assumptions reverse-engineered from the brief's worked example, to be confirmed against the platform's production rules before integration.</p>
+    <p>Demo only, built for a job proposal. Not affiliated with Upwork or Fiverr; the layout follows standard freelance-marketplace patterns, branded for PrideLink. Fee percentages are configurable assumptions reverse-engineered from the brief's worked example, to be confirmed against production rules before integration.</p>
   </div>
 </footer>
 
