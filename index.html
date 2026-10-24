@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hourly Rate Pricing Breakdown: Proposal Demo</title>
+<meta name="description" content="Interactive demo of a freelancer hourly rate pricing breakdown: base rate, platform service fee and HST, Stripe processing fee, GST handling and the total displayed to the client.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap">
+    <h1>Freelancer Hourly Rate: Pricing Breakdown</h1>
+    <p>Proposal demo built to the PrideLink brief. Type a rate and watch every calculated field update. Calculated fields are read-only, exactly as specified.</p>
+  </div>
+</header>
+
+<main class="wrap layout">
+  <section class="card" aria-labelledby="setup-h">
+    <h2 id="setup-h">Freelancer profile setup</h2>
+    <label class="field">
+      <span>Your On Demand Hourly Rate ($)</span>
+      <input id="in-rate" type="number" min="0" step="0.01" value="100.00" inputmode="decimal">
+    </label>
+    <label class="field toggle">
+      <input id="in-gst" type="checkbox">
+      <span>I am registered for GST (GST is included in the rate shown to clients)</span>
+    </label>
+
+    <table class="breakdown" aria-label="Pricing breakdown">
+      <tbody>
+        <tr>
+          <th scope="row">Your On Demand Hourly Rate</th>
+          <td id="out-base">$100.00</td>
+        </tr>
+        <tr id="row-gst" hidden>
+          <th scope="row">GST included in displayed rate <span class="sub" id="gst-note"></span></th>
+          <td id="out-gst">$0.00</td>
+        </tr>
+        <tr>
+          <th scope="row">PrideLink Service Fee &amp; HST <span class="sub" id="fee-note"></span></th>
+          <td><input id="out-fee" class="calc" readonly value="$11.30" aria-readonly="true"></td>
+        </tr>
+        <tr>
+          <th scope="row">Stripe Payment Processing Fee <span class="sub" id="stripe-note"></span></th>
+          <td><input id="out-stripe" class="calc" readonly value="$3.20" aria-readonly="true"></td>
+        </tr>
+        <tr class="total">
+          <th scope="row">Total Hourly Rate Displayed to Client</th>
+          <td><input id="out-total" class="calc strong" readonly value="$114.50" aria-readonly="true"></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="note">Fees are calculated automatically and cannot be edited by the freelancer. All percentages live in one config block in <code>pricing.js</code>, ready to be matched to the platform's exact rules.</p>
+  </section>
+
+  <section class="card client" aria-labelledby="client-h">
+    <h2 id="client-h">What the client sees</h2>
+    <div class="book-card">
+      <p class="book-rate"><span id="client-rate">$114.50</span> <span class="per">/ hour</span></p>
+      <button class="btn" type="button" id="btn-receipt">View price breakdown</button>
+      <div id="receipt" class="receipt" hidden>
+        <div class="r-row"><span>Freelancer hourly rate</span><span id="r-base">$100.00</span></div>
+        <div class="r-row" id="r-gst-row" hidden><span>GST (included)</span><span id="r-gst">$0.00</span></div>
+        <div class="r-row"><span>PrideLink service fee &amp; HST</span><span id="r-fee">$11.30</span></div>
+        <div class="r-row"><span>Payment processing fee</span><span id="r-stripe">$3.20</span></div>
+        <div class="r-row r-total"><span>Total per hour</span><span id="r-total">$114.50</span></div>
+        <p class="receipt-note">One transparent total. Platform and processing fees are shown openly, so the total never looks like more than the rate you agreed.</p>
+      </div>
+    </div>
+    <h3>Try it</h3>
+    <ul class="try">
+      <li>Set the rate to 100 with GST off: the total is exactly the brief's example, $114.50.</li>
+      <li>Tick GST registration: a GST line appears and the displayed total includes it.</li>
+      <li>Try 75 or 42.50 and check the cents rounding.</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Demo only, built for a job proposal. Fee percentages are configurable assumptions reverse-engineered from the brief's worked example, to be confirmed against the platform's production rules before integration.</p>
+  </div>
+</footer>
+
+<script src="pricing.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

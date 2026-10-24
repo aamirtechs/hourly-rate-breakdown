@@ -1,0 +1,37 @@
+:root{--ink:#1d2733;--muted:#5c6b7a;--bg:#f2f5f7;--card:#fff;--accent:#5b2a86;--accent2:#7d3fc4;--line:#dde5ec;--radius:14px}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+.wrap{max-width:1020px;margin:0 auto;padding:0 16px}
+.site-header{background:linear-gradient(135deg,#3c1a63,#5b2a86);color:#fff;padding:26px 0 20px}
+.site-header h1{margin:0;font-size:1.6rem}
+.site-header p{margin:6px 0 0;opacity:.92;max-width:70ch}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:22px 16px 36px}
+@media (max-width:820px){.layout{grid-template-columns:1fr}}
+.card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:0 2px 10px rgba(20,30,45,.07)}
+.card h2{margin-top:0;font-size:1.15rem}
+.field{display:block;margin:12px 0}
+.field span{display:block;font-weight:600;margin-bottom:6px}
+.field input[type=number]{width:100%;padding:10px 12px;font-size:1.05rem;border:2px solid var(--line);border-radius:10px}
+.field.toggle{display:flex;gap:10px;align-items:flex-start;font-weight:400}
+.field.toggle input{margin-top:5px;width:18px;height:18px}
+.field.toggle span{font-weight:400;margin:0}
+.breakdown{width:100%;border-collapse:collapse;margin-top:8px}
+.breakdown th,.breakdown td{padding:10px 8px;border-top:1px solid var(--line);text-align:left;vertical-align:top}
+.breakdown td{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.breakdown .sub{display:block;font-weight:400;color:var(--muted);font-size:.85rem}
+.breakdown tr.total th,.breakdown tr.total td{border-top:2px solid var(--ink);font-size:1.05rem}
+input.calc{border:none;background:#f4f0fa;border-radius:8px;padding:6px 10px;font-size:1rem;text-align:right;width:130px;color:var(--ink)}
+input.calc.strong{background:#e9def7;font-weight:700}
+.note{color:var(--muted);font-size:.9rem}
+.book-card{border:2px solid var(--line);border-radius:var(--radius);padding:18px;text-align:center}
+.book-rate{font-size:2rem;font-weight:800;margin:4px 0 10px}
+.book-rate .per{font-size:1rem;color:var(--muted);font-weight:600}
+.btn{appearance:none;border:none;background:var(--accent);color:#fff;border-radius:10px;padding:10px 18px;font-size:1rem;font-weight:600;cursor:pointer}
+.btn:hover{background:var(--accent2)}
+.receipt{margin-top:16px;text-align:left;border-top:1px dashed var(--line);padding-top:12px}
+.r-row{display:flex;justify-content:space-between;padding:5px 0;font-variant-numeric:tabular-nums}
+.r-total{border-top:2px solid var(--ink);font-weight:700;margin-top:6px;padding-top:8px}
+.receipt-note{color:var(--muted);font-size:.9rem}
+.try{color:var(--muted);padding-left:18px}
+.site-footer{border-top:1px solid var(--line);padding:14px 0 24px;color:var(--muted);font-size:.9rem}
+code{background:#f0eef5;padding:1px 5px;border-radius:5px}
